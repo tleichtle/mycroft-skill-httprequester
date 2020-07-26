@@ -3,10 +3,11 @@
 from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill, intent_handler
 from mycroft.util.log import LOG
+import requests
 
 class HttpRequesterSkill(MycroftSkill):
     def __init__(self):
-        super(TemplateSkill, self).__init__(name="HttpRequesterSkill")
+        super(HttpRequesterSkill, self).__init__(name="HttpRequesterSkill")
         self.count = 0
 
     # The "handle_xxxx_intent" function is triggered by Mycroft when the
@@ -20,9 +21,9 @@ class HttpRequesterSkill(MycroftSkill):
     #   'Hello world'
     #   'Howdy you great big world'
     #   'Greetings planet earth'
-    @intent_handler(IntentBuilder("BeamerIntent").require("BeamerKeyword"))
+    @intent_handler(IntentBuilder("").require("Actions").require("Devices"))
     def handle_beamer_intent(self, message):
-        self.speak("starting beamer")
+        self.speak("starting projector")
         url = 'http://192.168.1.138/ir?code=0xc1aa09f6&bits=32&protocol=NEC'
         r = requests.get(url)
         self.speak("command was executed")
